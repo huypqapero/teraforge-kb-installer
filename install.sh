@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
-# Public installer for team-knowledge private KB.
+# Public installer for teraforge-kb private KB.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/huypqapero/kb-team-installer/main/install.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/huypqapero/kb-team-installer/main/install.sh | bash -s -- --with-hooks
+#   curl -fsSL https://raw.githubusercontent.com/huypqapero/teraforge-kb-installer/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/huypqapero/teraforge-kb-installer/main/install.sh | bash -s -- --with-hooks
 #
 # Env vars (optional):
-#   KB_TEAM_REPO     Private repo (default: huypqapero/team-knowledge)
-#   KB_TEAM_DIR      Install path (default: $HOME/.kb-team)
-#   KB_TEAM_REF      Git ref      (default: main)
-#   KB_TEAM_BIN      Bin dir      (default: $HOME/.local/bin)
+#   TFKB_REPO     Private repo (default: huypqapero/teraforge-kb)
+#   TFKB_DIR      Install path (default: $HOME/.tfkb)
+#   TFKB_REF      Git ref      (default: main)
+#   TFKB_BIN      Bin dir      (default: $HOME/.local/bin)
 #
 # Prerequisite: git, curl, gh (GitHub CLI).
 # Installs: uv (static binary) + Python 3.11 managed + MCP tools + Claude skill.
 
 set -euo pipefail
 
-readonly PRIVATE_REPO="${KB_TEAM_REPO:-huypqapero/team-knowledge}"
-readonly INSTALL_DIR="${KB_TEAM_DIR:-$HOME/.kb-team}"
-readonly BIN_DIR="${KB_TEAM_BIN:-$HOME/.local/bin}"
-readonly REF="${KB_TEAM_REF:-main}"
+readonly PRIVATE_REPO="${TFKB_REPO:-huypqapero/teraforge-kb}"
+readonly INSTALL_DIR="${TFKB_DIR:-$HOME/.tfkb}"
+readonly BIN_DIR="${TFKB_BIN:-$HOME/.local/bin}"
+readonly REF="${TFKB_REF:-main}"
 
 readonly C_G='\033[0;32m'
 readonly C_Y='\033[1;33m'
@@ -85,11 +85,11 @@ clone_or_update_repo() {
 
 install_symlink() {
     mkdir -p "$BIN_DIR"
-    local target="$INSTALL_DIR/bin/kb-team"
-    [[ -f "$target" ]] || die "kb-team CLI not found at $target. Repo content missing?"
+    local target="$INSTALL_DIR/bin/tfkb"
+    [[ -f "$target" ]] || die "tfkb CLI not found at $target. Repo content missing?"
     chmod +x "$target"
-    ln -sf "$target" "$BIN_DIR/kb-team"
-    success "Linked $BIN_DIR/kb-team"
+    ln -sf "$target" "$BIN_DIR/tfkb"
+    success "Linked $BIN_DIR/tfkb"
 }
 
 ensure_path_in_rc() {
@@ -106,7 +106,7 @@ ensure_path_in_rc() {
     if ! grep -q "$BIN_DIR" "$rc" 2>/dev/null; then
         warn "$BIN_DIR not in PATH. Adding to $rc..."
         echo "" >> "$rc"
-        echo "# kb-team" >> "$rc"
+        echo "# tfkb" >> "$rc"
         echo "export PATH=\"$BIN_DIR:\$PATH\"" >> "$rc"
         warn "Restart terminal or: source $rc"
     fi
@@ -115,7 +115,7 @@ ensure_path_in_rc() {
 
 main() {
     log "=============================="
-    log " Team Knowledge Base Installer"
+    log " TeraForge Knowledge Base Installer"
     log "=============================="
 
     check_cmd git
@@ -129,9 +129,9 @@ main() {
     ensure_path_in_rc
 
     log ""
-    log "Bootstrap complete. Running kb-team install..."
+    log "Bootstrap complete. Running tfkb install..."
     log ""
-    exec "$BIN_DIR/kb-team" install "$@"
+    exec "$BIN_DIR/tfkb" install "$@"
 }
 
 main "$@"

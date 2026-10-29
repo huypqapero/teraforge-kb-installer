@@ -1,28 +1,28 @@
-# kb-team Installer
+# TeraForge KB Installer
 
-Public installer for the **private** `huypqapero/team-knowledge` KB.
+Public installer for the **private** `huypqapero/teraforge-kb` KB — knowledge base cho BA, Dev và QA tại Terasoft.
 
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/huypqapero/kb-team-installer/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/huypqapero/teraforge-kb-installer/main/install.sh | bash
 ```
 
 With auto-sync hooks:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/huypqapero/kb-team-installer/main/install.sh | bash -s -- --with-hooks
+curl -fsSL https://raw.githubusercontent.com/huypqapero/teraforge-kb-installer/main/install.sh | bash -s -- --with-hooks
 ```
 
 ## Prerequisite
 
 - `git`, `curl`, `gh` (GitHub CLI)
-- GitHub account với access vào private repo `huypqapero/team-knowledge`
+- GitHub account với access vào private repo `huypqapero/teraforge-kb`
 
 Installer will:
 1. Prompt `gh auth login` nếu chưa authenticated
 2. Install `uv` (static binary ~10MB) nếu chưa có
 3. Download Python 3.11 managed (isolated, không touch system Python)
-4. `gh repo clone` private KB → `~/.kb-team/`
+4. `gh repo clone` private KB → `~/.tfkb/`
 5. Install MCP tools + Claude skill + optional hooks
 
 Full install ~2 min, ~130MB disk.
@@ -30,25 +30,25 @@ Full install ~2 min, ~130MB disk.
 ## What gets installed
 
 ```
-~/.kb-team/                   ← Private KB cloned
-~/.local/bin/kb-team          ← CLI symlink
+~/.tfkb/                   ← Private KB cloned
+~/.local/bin/tfkb          ← CLI symlink
 ~/.local/share/uv/python/     ← Python 3.11 managed (~15MB)
-~/.local/share/uv/tools/      ← basic-memory + team-knowledge-mcp (~100MB)
-~/.claude/skills/kb-team/     ← Claude skill
+~/.local/share/uv/tools/      ← basic-memory + teraforge-kb-mcp (~100MB)
+~/.claude/skills/tfkb/     ← Claude skill
 ~/.claude.json                ← MCP wired (atomic merge, backup)
 ```
 
 ## Uninstall
 
 ```bash
-kb-team uninstall           # Remove install
-kb-team uninstall --purge   # Also remove uv + Python managed
+tfkb uninstall           # Remove install
+tfkb uninstall --purge   # Also remove uv + Python managed
 ```
 
 ## Related
 
-- Private KB repo: https://github.com/huypqapero/team-knowledge
-- Wrapper source: https://github.com/huypqapero/team-knowledge/tree/main/wrapper (team-knowledge-mcp fork v0.3.0)
+- Private KB repo: https://github.com/huypqapero/teraforge-kb
+- Wrapper source: https://github.com/huypqapero/teraforge-kb/tree/main/wrapper (teraforge-kb-mcp fork v0.3.0)
 
 ## Troubleshoot
 
